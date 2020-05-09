@@ -18,3 +18,23 @@ export const redirectToLogin = (redirectedFrom) => {
     ></Redirect>
   );
 };
+
+export const getQuestionsToShow = (
+  questions,
+  users,
+  authedUser,
+  selectedTab
+) => {
+  const sortedQuestions = Object.keys(questions)
+    .filter((key) => questions.hasOwnProperty(key))
+    .map((key) => questions[key])
+    .sort((a, b) => b.timestamp - a.timestamp);
+
+  return selectedTab === 0
+    ? sortedQuestions.filter(
+        (question) => !users[authedUser].answers[question.id]
+      )
+    : sortedQuestions.filter(
+        (question) => users[authedUser].answers[question.id] !== undefined
+      );
+};

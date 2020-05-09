@@ -1,16 +1,25 @@
 import React, { Fragment } from "react";
+import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
-import { Switch, Router, Route } from "react-router-dom";
-import { LoadingBar } from "react-redux-loading";
 import { createBrowserHistory } from "history";
 
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 import { handleInitialData } from "../actions/shared";
-import Dashboard from "./Dashboard";
-import Login from "./Login";
-import Leaderboard from "./Leaderboard";
-import QuestionView from "./QuestionView";
-import NotFound from "./NotFound";
-import NavBar from "./NavBar"
+
+import Login from "./login/Login";
+
+import Dashboard from "./layouts/Dashboard";
+import Leaderboard from "./layouts/Leaderboard";
+
+import NotFound from "./error/NotFound";
+
+import NavBar from "./navigation/NavBar";
+import ProtectedRoute from "./navigation/ProtectedRoute";
+
+import QuestionView from "./questions/QuestionView";
+import AddQuestion from "./questions/AddQuestion";
 
 class App extends React.Component {
   history = createBrowserHistory();
@@ -24,26 +33,35 @@ class App extends React.Component {
     if (loading) {
       return (
         <Fragment>
-          <LoadingBar loading={50} />
-          <h3>App is loading...</h3>
+          <Backdrop open>
+            <CircularProgress color="inherit" />
+          </Backdrop>
         </Fragment>
       );
     }
 
     return (
-      <Fragment>
-        {isLoggedIn && <NavBar />}
-        <Router history={this.history}>
+      <div>
+        <div>
+          {isLoggedIn && <NavBar />}
           <Switch>
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/leaderboard" component={Leaderboard} />
-            <Route exact path="/question/:id" component={QuestionView} />
-            <Route exact path="/question/add" component={QuestionView} />
-            <Route exact path="/" component={Dashboard} />
+            <Route exact path="/login" component={Login}></Route>
+            <ProtectedRoute exact path="/leaderboard" component={Leaderboard} />
+            <ProtectedRoute
+              exact
+              path="/question/:id"
+              component={QuestionView}
+            />
+            <ProtectedRoute
+              exact
+              path="/question/add"
+              component={AddQuestion}
+            />
+            <ProtectedRoute exact path="/" component={Dashboard} />
             <Route component={NotFound} />
           </Switch>
-        </Router>
-      </Fragment>
+        </div>
+      </div>
     );
   }
 }

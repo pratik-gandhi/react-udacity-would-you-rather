@@ -1,9 +1,9 @@
-export const FETCH_USERS = "FETCH_USERS"
+export const SET_USERS = "SET_USERS"
 export const ANSWER_QUESTION = "ANSWER_QUESTION"
 
-export function fetchUsers(users) {
+export function setUsers(users) {
     return {
-        type: FETCH_USERS,
+        type: SET_USERS,
         users
     }
 }

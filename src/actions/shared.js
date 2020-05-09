@@ -1,15 +1,15 @@
 import { _getQuestions, _getUsers } from "../api/_DATA";
 import { showLoading, hideLoading } from "react-redux-loading";
 
-import { fetchQuestions } from "./questions";
-import { fetchUsers } from "./users";
+import { setQuestions } from "./questions";
+import { setUsers } from "./users";
 
 export const handleInitialData = () => {
   return (dispatch) => {
     dispatch(showLoading());
     return Promise.all([_getQuestions(), _getUsers()]).then((values) => {
-      dispatch(fetchQuestions(values[0]));
-      dispatch(fetchUsers(values[1]));
+      dispatch(setQuestions(values[0]));
+      dispatch(setUsers(values[1]));
       dispatch(hideLoading());
     });
   };

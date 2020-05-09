@@ -1,13 +1,14 @@
 import {
-  FETCH_QUESTIONS,
+  SET_QUESTIONS,
   ADD_QUESTION,
+  MARK_QUESTION_ANSWERED,
 } from "../actions/questions";
 
 export default function questions(state = {}, action) {
   switch (action.type) {
-    case FETCH_QUESTIONS:
+    case SET_QUESTIONS:
       return {
-        ...state,
+        ...state,  
         ...action.questions,
       };
     case ADD_QUESTION:
@@ -15,6 +16,18 @@ export default function questions(state = {}, action) {
       return {
         ...state,
         [question.id]: question,
+      };
+    case MARK_QUESTION_ANSWERED:
+      const { authedUser, qid, answer } = action;
+      return {
+        ...state,
+        [qid]: {
+          ...state[qid],
+          [answer]: {
+            ...state[qid][answer],
+            votes: state[qid][answer].votes.concat([authedUser]),
+          },
+        },
       };
     default:
       return state;

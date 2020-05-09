@@ -1,14 +1,17 @@
-import { FETCH_USERS, ANSWER_QUESTION } from "../actions/users";
+import { SET_USERS, ANSWER_QUESTION } from "../actions/users";
 
 export default function users(state = {}, action) {
   switch (action.type) {
-    case FETCH_USERS:
+    case SET_USERS:
       return {
         ...state,
         ...action.users,
       };
     case ANSWER_QUESTION:
       const { authedUser, qid, answer } = action;
+      console.log(
+        `Users :: User ${authedUser} :: Question ${qid} :: Answer ${answer}`
+      );
       return {
         ...state,
         [authedUser]: {
