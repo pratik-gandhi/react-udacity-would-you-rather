@@ -9,11 +9,10 @@ export const setQuestions = (questions) => {
   };
 };
 
-export const addQuestion = (question, authedUser) => {
+export const addQuestion = (question) => {
   return {
     type: ADD_QUESTION,
-    question,
-    authedUser,
+    question
   };
 };
 

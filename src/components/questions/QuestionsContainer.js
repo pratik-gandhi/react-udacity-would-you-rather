@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router-dom"
 import { connect } from "react-redux";
 
 import Question from "./Question";
@@ -12,12 +13,22 @@ import { getQuestionsToShow } from "../../utils/Utils";
 class QuestionsContainer extends React.Component {
   state = {
     selectedTab: 0,
+    navigateToDetails: false,
+    questionIdToNavigateTo: null
   };
   handleChange = (e, newValue) => {
     this.setState(() => ({
       selectedTab: newValue,
     }));
   };
+
+  handleOnClick = (questionId) => {
+    this.setState((currentState) => ({
+      ...currentState,
+      navigateToDetails: true,
+      questionIdToNavigateTo: questionId
+    }))
+  }
 
   render() {
     const { selectedTab } = this.state;
@@ -29,6 +40,10 @@ class QuestionsContainer extends React.Component {
       authedUser,
       selectedTab
     );
+
+    if (this.state.navigateToDetails && this.state.questionIdToNavigateTo) {
+      return <Redirect to={`/questions/${this.state.questionIdToNavigateTo}`}></Redirect>
+    }
 
     return (
       <div>
@@ -47,7 +62,7 @@ class QuestionsContainer extends React.Component {
           ) : (
             <List>
               {questionsToShow.map((question) => (
-                <ListItem divider key={question.id}>
+                <ListItem divider key={question.id} onClick={() => this.handleOnClick(question.id)}>
                   <Question key={question.id} question={question} />
                 </ListItem>
               ))}

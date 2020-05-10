@@ -1,4 +1,8 @@
-import { SET_USERS, ANSWER_QUESTION } from "../actions/users";
+import {
+  SET_USERS,
+  ANSWER_QUESTION,
+  ADD_QUESTION_TO_USER,
+} from "../actions/users";
 
 export default function users(state = {}, action) {
   switch (action.type) {
@@ -9,9 +13,6 @@ export default function users(state = {}, action) {
       };
     case ANSWER_QUESTION:
       const { authedUser, qid, answer } = action;
-      console.log(
-        `Users :: User ${authedUser} :: Question ${qid} :: Answer ${answer}`
-      );
       return {
         ...state,
         [authedUser]: {
@@ -20,6 +21,15 @@ export default function users(state = {}, action) {
             ...state[authedUser]["answers"],
             [qid]: answer,
           },
+        },
+      };
+    case ADD_QUESTION_TO_USER:
+      const { authedUser : user, qid : id} = action;
+      return {
+        ...state,
+        [user]: {
+          ...state[user],
+          questions: state[user]["questions"].concat(id),
         },
       };
     default:

@@ -14,6 +14,10 @@ body {
   text-decoration: none;
 }
 
+.question :hover {
+  transform: scale(1.01);
+}
+
 .question {
   width: 100%;
   max-width: 590px;
@@ -22,6 +26,7 @@ body {
   flex-direction: column;
   margin: 0 auto;
   border-radius: 3px;
+  cursor: pointer;
 }
 
 .question-info {
@@ -72,3 +77,71 @@ body {
   margin: 5px;
   vertical-align: middle;
 }
+
+.form-container {
+  max-width: 50%;
+  max-height: 50%;
+  margin-left: 25%;
+  margin-top: 10%;
+}
+
+.add-question-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.question-view {
+  align-items: center;
+}
+
+.vote-container {
+  width: 100%;
+  max-width: 590px;  
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  border-radius: 3px;
+}
+
+.vote-container :nth-child(1) {
+  background-color: #B0E0E6;
+}
+
+.vote-container :nth-child(2) {
+  background-color:#3CB371;
+}
+
+.vote-count {
+  height: auto;
+  padding: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  -webkit-animation: createBox .25s;
+  animation: showVotes 1s
+}
+
+.leaderboard-container {
+  width: 100%;
+  height: 100%;
+  min-width: 500px;
+  margin: 20px auto ;
+  align-content: center;
+}
+
+.leaderboard-container > h3 {
+  margin: 30px auto;
+  text-align: center;
+}
+
+.leaderboard-table {
+  width: 100%;
+}
+
+.selected {
+  float: right;
+}
+
+
+@-webkit-keyframes showVotes { from { transform: scale(0); } to { transform: scale(1); } }
+@keyframes showVotes { from { transform: scale(0); } to { transform: scale(1); } }

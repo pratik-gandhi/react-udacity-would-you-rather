@@ -21,6 +21,15 @@ import ProtectedRoute from "./navigation/ProtectedRoute";
 import QuestionView from "./questions/QuestionView";
 import AddQuestion from "./questions/AddQuestion";
 
+import {
+  HOME_ROUTE,
+  LEADERBOARD_ROUTE,
+  LOGIN_ROUTE,
+  ADD_QUESTION_ROUTE,
+  VIEW_QUESTION_ROUTE,
+} from "../routes/Routes";
+import { Snackbar } from "@material-ui/core";
+
 class App extends React.Component {
   history = createBrowserHistory();
 
@@ -45,32 +54,48 @@ class App extends React.Component {
         <div>
           {isLoggedIn && <NavBar />}
           <Switch>
-            <Route exact path="/login" component={Login}></Route>
-            <ProtectedRoute exact path="/leaderboard" component={Leaderboard} />
+            <Route exact path={LOGIN_ROUTE} component={Login}></Route>
             <ProtectedRoute
               exact
-              path="/question/:id"
+              path={LEADERBOARD_ROUTE}
+              component={Leaderboard}
+            />
+            <ProtectedRoute
+              exact
+              path={VIEW_QUESTION_ROUTE}
               component={QuestionView}
             />
             <ProtectedRoute
               exact
-              path="/question/add"
+              path={ADD_QUESTION_ROUTE}
               component={AddQuestion}
             />
-            <ProtectedRoute exact path="/" component={Dashboard} />
+            <ProtectedRoute exact path={HOME_ROUTE} component={Dashboard} />
             <Route component={NotFound} />
           </Switch>
         </div>
+        {this.props.showMessage && (
+          <Snackbar
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            open={this.props.showMessage}
+            message="Thank you for voting! The question has been moved to 'Answered
+                  Questions' section"
+          />
+        )}
       </div>
     );
   }
 }
 
-function mapStateToProps({ authedUser, questions, users }) {
+function mapStateToProps({ authedUser, questions, users, showMessage }) {
   return {
     loading:
       Object.keys(questions).length === 0 || Object.keys(users).length === 0,
     isLoggedIn: authedUser !== null,
+    showMessage,
   };
 }
 

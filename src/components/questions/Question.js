@@ -6,10 +6,12 @@ import { _saveQuestionAnswer } from "../../api/_DATA";
 
 import { setUsers, answerQuestion } from "../../actions/users";
 import { setQuestions, markQuestionAnswered } from "../../actions/questions";
-import Choices from "./Choices";
+import { showMessage, hideMessage } from "../../actions/message";
+import Choices from "./choices/Choices";
 
 class Question extends React.Component {
-  chooseAnswer = (answer) => {
+  chooseAnswer = (e, answer) => {
+    e.stopPropagation();
     const { dispatch, authedUser, users, question, questions } = this.props;
 
     _saveQuestionAnswer({ authedUser, qid: question.id, answer }).catch(() => {
@@ -20,6 +22,8 @@ class Question extends React.Component {
 
     dispatch(answerQuestion(authedUser, question.id, answer));
     dispatch(markQuestionAnswered(authedUser, question.id, answer));
+    dispatch(showMessage());
+    setTimeout(() => dispatch(hideMessage()), 2000);
   };
 
   render() {
@@ -36,10 +40,12 @@ class Question extends React.Component {
             src={users[question.author].avatarURL}
           />
           <div className="question-desc">
-            <span>
-              {question.author} asked, would you rather
-            </span>
-            {answered && (<span className="question-subscript">You answered this question</span>)}
+            <span>{question.author} asked, would you rather</span>
+            {answered && (
+              <span className="question-subscript">
+                You already answered this question
+              </span>
+            )}
           </div>
         </div>
         <Choices

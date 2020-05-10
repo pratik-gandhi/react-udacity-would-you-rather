@@ -5,11 +5,13 @@ import {loadingBarReducer} from "react-redux-loading"
 import users from "./users"
 import questions from "./questions"
 import authedUser from "./authedUser"
+import showMessage from "./message"
 
 
 export default combineReducers({
     users,
     questions,
     authedUser,
+    showMessage,
     loadingBarReducer
 })

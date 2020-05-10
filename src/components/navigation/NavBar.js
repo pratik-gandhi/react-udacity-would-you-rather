@@ -11,6 +11,12 @@ import ExitToApp from "@material-ui/icons/ExitToApp";
 
 import { unsetAuthedUser as logout } from "../../actions/autheduser";
 
+import {
+  HOME_ROUTE,
+  LEADERBOARD_ROUTE,
+  ADD_QUESTION_ROUTE,
+} from "../../routes/Routes";
+
 const toolbarStyle = {
   display: "flex",
   flexDirection: "row",
@@ -32,13 +38,13 @@ const NavBar = (props) => {
         aria-label="navigation buttons"
         variant="text"
       >
-        <Button component={Link} to="/" edge="start" secondary="true">
+        <Button component={Link} to={HOME_ROUTE} edge="start" secondary="true">
           Dashboard
         </Button>
-        <Button component={Link} to="/question/add">
+        <Button component={Link} to={ADD_QUESTION_ROUTE}>
           Add Question
         </Button>
-        <Button component={Link} to="/leaderboard">
+        <Button component={Link} to={LEADERBOARD_ROUTE}>
           Leaderboard
         </Button>
       </ButtonGroup>

@@ -1,0 +1,5 @@
+export const HOME_ROUTE = "/"
+export const LEADERBOARD_ROUTE = "/leaderboard"
+export const LOGIN_ROUTE = "/login"
+export const ADD_QUESTION_ROUTE = "/add"
+export const VIEW_QUESTION_ROUTE = "/questions/:id"
