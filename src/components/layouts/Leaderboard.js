@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import Avatar from "@material-ui/core/Avatar";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -10,8 +11,8 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
 const style = {
-  backgroundColor : "#6cbf84",
-}
+  backgroundColor: "#6cbf84",
+};
 class Leaderboard extends React.Component {
   render() {
     const { authedUser, users } = this.props;
@@ -30,9 +31,15 @@ class Leaderboard extends React.Component {
             </TableHead>
             <TableBody>
               {users.map((user) => (
-                <TableRow key={user.id} style={user.id === authedUser ? style : {}}>
-                  <TableCell align="center" component="th" scope="row">
-                    {user.name}
+                <TableRow
+                  key={user.id}
+                  style={user.id === authedUser ? style : {}}
+                >
+                  <TableCell component="th" scope="row">
+                    <div className="leaderboard-user">
+                      <Avatar alt={user.name} src={user.avatarURL} />
+                      <div className="leaderboard-user-name">{user.name}</div>
+                    </div>
                   </TableCell>
                   <TableCell align="center">{user.questions}</TableCell>
                   <TableCell align="center">{user.answers}</TableCell>
@@ -56,6 +63,7 @@ const mapStateToProps = ({ authedUser, users }) => {
     .map((user) => ({
       id: user.id,
       name: user.name,
+      avatarURL: user.avatarURL,
       questions: user.questions.length,
       answers: Object.keys(user.answers).filter((key) =>
         user.answers.hasOwnProperty(key)
@@ -67,7 +75,6 @@ const mapStateToProps = ({ authedUser, users }) => {
       );
     });
 
-    console.log(`Formatted users = ${JSON.stringify(formattedUsers)}`)
   return {
     authedUser,
     users: formattedUsers,

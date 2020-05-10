@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Avatar } from "@material-ui/core";
+import Avatar from "@material-ui/core/Avatar";
 
 import { _saveQuestionAnswer } from "../../api/_DATA";
 
@@ -11,7 +11,6 @@ import Choices from "./choices/Choices";
 
 class Question extends React.Component {
   chooseAnswer = (e, answer) => {
-    e.stopPropagation();
     const { dispatch, authedUser, users, question, questions } = this.props;
 
     _saveQuestionAnswer({ authedUser, qid: question.id, answer }).catch(() => {
